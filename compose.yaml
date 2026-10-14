@@ -5,5 +5,15 @@ services:
     volumes:
       - ./data:/app/data
     ports:
-      # <Host Port>:<Container Port>
-      - "3001:3001"
+      # <Host IP>:<Host Port>:<Container Port>
+      - "${KUMA_BIND_IP}:${KUMA_PORT}:${KUMA_PORT}"
+    environment:
+      - TZ=${TZ}
+      - UPTIME_KUMA_HOST=0.0.0.0
+      - UPTIME_KUMA_PORT=${KUMA_PORT}
+      - UPTIME_KUMA_DB_TYPE=mariadb
+      - UPTIME_KUMA_DB_HOSTNAME=${DB_HOST}
+      - UPTIME_KUMA_DB_PORT=${MARIADB_PORT}
+      - UPTIME_KUMA_DB_NAME=${DB_NAME}
+      - UPTIME_KUMA_DB_USERNAME=${DB_APP_USER}
+      - UPTIME_KUMA_DB_PASSWORD=${DB_APP_PASSWORD}
